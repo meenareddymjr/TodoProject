@@ -16,16 +16,27 @@ export function renderLoginPage(container: HTMLElement) {
   `;
 
   const loginBtn = document.getElementById('loginBtn') as HTMLButtonElement;
-  
+
+    if (!loginBtn) {
+        return;
+    }
+
   loginBtn.onclick = () => {
-    const username = (document.getElementById('username') as HTMLInputElement).value;
-    const password = (document.getElementById('password') as HTMLInputElement).value;
+    const usernameInput = document.getElementById('username') as HTMLInputElement;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
+    const errorMsgInput = document.getElementById('errorMsg') as HTMLElement;
+
+    if(!usernameInput || !passwordInput || !errorMsgInput)
+        return;
+
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
 
     if (login(username, password)) {
       saveToLocalStorage('isLoggedIn', 'true');
       location.reload();
     } else {
-      (document.getElementById('errorMsg') as HTMLElement).innerText = 'Invalid credentials';
+      errorMsgInput.innerText = 'Invalid credentials';
     }
   };
 }

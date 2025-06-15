@@ -22,14 +22,21 @@ export function renderDetailPage(container) {
     <button id="logoutBtn">Logout</button>
   `;
     const textArea = document.getElementById('text');
+    if (!textArea)
+        return;
     textArea.oninput = () => {
         document.getElementById('charCount').textContent = `${textArea.value.length}/300`;
     };
     document.getElementById('todoForm').onsubmit = (e) => {
         e.preventDefault();
-        const title = document.getElementById('title').value;
-        const text = document.getElementById('text').value;
-        const date = document.getElementById('date').value;
+        const titleInput = document.getElementById('title');
+        const textInput = document.getElementById('text');
+        const dateInput = document.getElementById('date');
+        if (!titleInput || !textInput || !dateInput)
+            return;
+        const title = titleInput.value.trim();
+        const text = textInput.value.trim();
+        const date = dateInput.value.trim();
         if (!title || !text || !date)
             return;
         if (currentEditId !== null) {

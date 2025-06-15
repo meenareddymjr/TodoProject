@@ -25,15 +25,24 @@ export function renderDetailPage(container: HTMLElement) {
   `;
 
   const textArea = document.getElementById('text') as HTMLTextAreaElement;
+
+  if (!textArea) return;
+  
   textArea.oninput = () => {
     document.getElementById('charCount')!.textContent = `${textArea.value.length}/300`;
   };
 
   document.getElementById('todoForm')!.onsubmit = (e) => {
     e.preventDefault();
-    const title = (document.getElementById('title') as HTMLInputElement).value;
-    const text = (document.getElementById('text') as HTMLTextAreaElement).value;
-    const date = (document.getElementById('date') as HTMLInputElement).value;
+    const titleInput = document.getElementById('title') as HTMLInputElement;
+    const textInput = document.getElementById('text') as HTMLTextAreaElement;
+    const dateInput = document.getElementById('date') as HTMLInputElement;
+
+    if (!titleInput || !textInput || !dateInput) return;
+
+    const title = titleInput.value.trim();
+    const text = textInput.value.trim();
+    const date = dateInput.value.trim();
 
     if (!title || !text || !date) return;
 

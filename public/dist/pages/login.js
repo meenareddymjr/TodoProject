@@ -14,15 +14,23 @@ export function renderLoginPage(container) {
     <p id="errorMsg" style="color:red;"></p>
   `;
     const loginBtn = document.getElementById('loginBtn');
+    if (!loginBtn) {
+        return;
+    }
     loginBtn.onclick = () => {
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const errorMsgInput = document.getElementById('errorMsg');
+        if (!usernameInput || !passwordInput || !errorMsgInput)
+            return;
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
         if (login(username, password)) {
             saveToLocalStorage('isLoggedIn', 'true');
             location.reload();
         }
         else {
-            document.getElementById('errorMsg').innerText = 'Invalid credentials';
+            errorMsgInput.innerText = 'Invalid credentials';
         }
     };
 }
